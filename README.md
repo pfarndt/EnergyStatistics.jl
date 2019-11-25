@@ -1,14 +1,15 @@
-# Distance Correlation
+# EnergyStatistics
 
 
 
-*Distance Correlation for Julia.*
+*Energy Statistics (E-Statistics) for Julia.*
 
 | **Documentation**  |
 |:------------------:|
 | [![][docs-dev-img]][docs-dev-url] |
 
-This package allows to compute the distance covariance `dcov`, distance variance `dvar` and distance correlation `dcor`.
+This package allows to compute the distance covariance `dcov`,
+distance variance `dvar` and distance correlation `dcor`.
 See [this page][wiki] for more details and references.
 
 
