@@ -25,8 +25,9 @@ y = map(x -> x^4 - x^2, x)
 dcor(x, y) ≈ 0.374204050
 ```
 
-These two vectors are clearly associated. However, the vanishing `Rsquared`
-suggests that they are independent. The finite distance correlation `dcor`
+These two vectors are clearly associated. However, their (Pearson)
+correlation coefficient vanishes suggesting that they are independent. 
+The finite distance correlation `dcor`
 reveals their __non-linear__ association.
 
 
