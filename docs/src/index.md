@@ -13,7 +13,7 @@ pkg> add EnergyStatistics
 ```
 
 ## General Usage
-Given two random vectors `x` and `y` the distance correlation `dcor` can
+Given two vectors `x` and `y` the distance correlation `dcor` can
 simply computed:
 
 ```julia
@@ -26,47 +26,53 @@ dcor(x, y) ≈ 0.374204050
 ```
 
 These two vectors are clearly associated. However, their (Pearson)
-correlation coefficient vanishes suggesting that they are independent. 
+correlation coefficient vanishes suggesting that they are independent.
 The finite distance correlation `dcor`
 reveals their __non-linear__ association.
 
 
-Function to compute the distance covariance `dcov` and distance variance `dvar` are also supplied.
+Function to compute the distance covariance `dcov` and distance variance `dvar`
+are also supplied.
 
 
 
 ## Advanced Usage
 
-The computation of the 'distance matrices' is computationally expansive.
-In cases where you want to compute several distance correlation
-keeping one of vectors fixed you may consider storing the distance matrices
-for future use.
+The computation of a 'DistanceMatrix' is computationally expansive.
+Especially the computation of `n(n-1)/2` pairwise distances
+for vectors of length `n` and the subsequent
+centering of the distance matrix take time and memory.
+In cases where one wants to compute several distance correlations and
+keep intermediate results of the distance computations and centering
+one can do so. For example:
 
-For example
 ```julia
-A = dcenter!(DistanceMatrix(x))
-B = dcenter!(DistanceMatrix(y))
-C = dcenter!(DistanceMatrix(z))
+Dx = EnergyStatistics.dcenter!(EnergyStatistics.DistanceMatrix(x))
+Dy = EnergyStatistics.dcenter!(EnergyStatistics.DistanceMatrix(y))
+Dz = EnergyStatistics.dcenter!(EnergyStatistics.DistanceMatrix(z))
 
-dcor(A, B)
-dcor(A, C)
+dcor_xy = dcor(Dx, Dy)
+dcor_xz = dcor(Dx, Dz)
 ```
-will run  much faster than
+will run faster than
+
 ```julia
-dcor(x, y)
-dcor(x, z)
+dcor_xy = dcor(x, y)
+dcor_xz = dcor(x, z)
 ```
-since the distance matrix for the vector `x` has to be compute only once.
+since the distance matrix `Dx` for the vector `x` is only computed once.
+
 
 You can also construct distance matrices using other distance measures
 than the (default) `abs`.
 
 ```julia
-AA = dcenter!(DistanceMatrix(Float64, x, abs2))
+AA = EnergyStatistics.dcenter!(EnergyStatistics.DistanceMatrix(Float64, x, abs2))
 ```
 
-In place double centering `dcenter!` and U-centering `ucenter!` functions are
-available.
+
+Instead of double centering via `dcenter!` one may also
+use U-centering via the `ucenter!` function.
 
 
 ## References
@@ -106,8 +112,7 @@ EnergyStatistics.ucenter!(A::EnergyStatistics.DistanceMatrix{T}) where {T <: Rea
 ```
 
 ```@docs
-EnergyStatistics.dcor(A::EnergyStatistics.DistanceMatrix{T}, B::EnergyStatistics.DistanceMatrix{T},
-        dvarA::T = dvar(A), dvarB::T = dvar(B) ) where {T <: Real}
+EnergyStatistics.dcor(A::EnergyStatistics.DistanceMatrix{T}, B::EnergyStatistics.DistanceMatrix{T}) where {T <: Real}
 ```
 
 ```@docs
