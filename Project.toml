@@ -1,7 +1,7 @@
 name = "EnergyStatistics"
 uuid = "631263cc-0f82-11ea-1caf-35c9eae72d11"
 authors = ["Peter Arndt <pfarndt@gmail.com>"]
-version = "0.2.0"
+version = "0.2.1"
 
 [deps]
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
